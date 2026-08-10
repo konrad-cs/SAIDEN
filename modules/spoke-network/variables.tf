@@ -55,9 +55,8 @@ variable "routed_address_prefixes" {
 }
 
 variable "hub_vpn_gateway_id" {
-  description = "ID of the hub VPN gateway. Used to ensure the gateway exists before the peering enables gateway transit."
+  description = "ID of the hub VPN gateway. Referenced by the peerings so that the gateway exists before gateway transit is enabled."
   type        = string
-  default     = null
 }
 
 variable "tags" {

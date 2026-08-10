@@ -64,9 +64,10 @@ resource "azurerm_virtual_network_peering" "spoke_to_hub" {
   use_remote_gateways          = true
 
   lifecycle {
-    # The hub VPN gateway must exist before the spoke can use it via gateway transit.
+    # Referencing the hub gateway makes it a dependency, so the peering is only
+    # created once the gateway it transits through exists.
     precondition {
-      condition     = var.hub_vpn_gateway_id != null
+      condition     = var.hub_vpn_gateway_id != ""
       error_message = "hub_vpn_gateway_id must be provided so the spoke peering can use the hub gateway."
     }
   }
@@ -82,4 +83,11 @@ resource "azurerm_virtual_network_peering" "hub_to_spoke" {
   allow_forwarded_traffic      = true
   allow_gateway_transit        = true
   use_remote_gateways          = false
+
+  lifecycle {
+    precondition {
+      condition     = var.hub_vpn_gateway_id != ""
+      error_message = "hub_vpn_gateway_id must be provided before gateway transit can be enabled on the hub peering."
+    }
+  }
 }

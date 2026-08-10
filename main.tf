@@ -34,6 +34,12 @@ module "hub" {
   firewall_sku_name = var.firewall_sku_name
   firewall_sku_tier = var.firewall_sku_tier
 
+  spoke_address_spaces = concat(
+    var.spoke_data_processing_address_space,
+    var.spoke_backtesting_address_space,
+  )
+  onprem_address_space = var.onprem_address_space
+
   tags = local.tags
 }
 

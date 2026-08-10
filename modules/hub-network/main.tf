@@ -81,6 +81,10 @@ resource "azurerm_firewall_policy" "hub" {
   tags                = var.tags
 }
 
+locals {
+  azure_address_spaces = concat(var.address_space, var.spoke_address_spaces)
+}
+
 # Allow the spokes to reach the on-premises sites (and each other) through the hub.
 resource "azurerm_firewall_policy_rule_collection_group" "hub" {
   name               = "${var.name_prefix}-fw-rules"
@@ -95,16 +99,16 @@ resource "azurerm_firewall_policy_rule_collection_group" "hub" {
     rule {
       name                  = "spoke-to-onprem-and-spoke"
       protocols             = ["Any"]
-      source_addresses      = ["10.16.0.0/12"]
-      destination_addresses = ["10.16.0.0/12", "10.2.0.0/16", "10.1.0.0/16"]
+      source_addresses      = local.azure_address_spaces
+      destination_addresses = concat(local.azure_address_spaces, var.onprem_address_space)
       destination_ports     = ["*"]
     }
 
     rule {
-      name                  = "onprem-to-spoke"
+      name                  = "onprem-to-azure"
       protocols             = ["Any"]
-      source_addresses      = ["10.2.0.0/16", "10.1.0.0/16"]
-      destination_addresses = ["10.16.0.0/12"]
+      source_addresses      = var.onprem_address_space
+      destination_addresses = local.azure_address_spaces
       destination_ports     = ["*"]
     }
   }
