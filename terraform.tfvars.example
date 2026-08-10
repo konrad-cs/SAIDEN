@@ -1,0 +1,42 @@
+# Example variable values. Copy to terraform.tfvars and adjust.
+# NOTE: the values below are placeholders - do NOT commit real secrets.
+
+location    = "northeurope"
+prefix      = "saiden"
+environment = "prod"
+
+# Optional - defaults to "<prefix>-<environment>-rg" when omitted.
+resource_group_name = "saiden-prod-rg"
+
+# Azure supernet 10.16.0.0/12 (10.16.0.0 - 10.31.255.255)
+hub_address_space        = ["10.16.0.0/16"]
+gateway_subnet_prefixes  = ["10.16.0.0/24"]
+firewall_subnet_prefixes = ["10.16.1.0/24"]
+
+# Spoke 1 ("Link 1") - Data Processing
+spoke_data_processing_address_space     = ["10.17.0.0/16"]
+spoke_data_processing_workload_prefixes = ["10.17.0.0/24"]
+
+# Spoke 2 ("Link 2") - Backtesting
+spoke_backtesting_address_space     = ["10.18.0.0/16"]
+spoke_backtesting_workload_prefixes = ["10.18.0.0/24"]
+
+vpn_gateway_sku   = "VpnGw1"
+firewall_sku_name = "AZFW_VNet"
+firewall_sku_tier = "Standard"
+
+# Equinix LD4 (10.2.0.0/16) plus DUB-O (10.1.0.0/16), which is only reachable
+# indirectly via the Equinix router and the fiber link.
+onprem_address_space = ["10.2.0.0/16", "10.1.0.0/16"]
+
+# Public IP of the Equinix LD4 router terminating the IPSec tunnel - PLACEHOLDER.
+equinix_router_public_ip = "203.0.113.10"
+
+# PLACEHOLDER ONLY - supply the real pre-shared key out of band, e.g. via
+# TF_VAR_vpn_shared_key or a secret store. Never commit the real value.
+vpn_shared_key = "REPLACE_ME_WITH_A_SECRET"
+
+tags = {
+  owner       = "platform-team"
+  cost_center = "trading"
+}
