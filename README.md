@@ -1,5 +1,6 @@
 ## Network View
-<img width="2085" height="1159" alt="image" src="https://github.com/user-attachments/assets/01033e7c-c89a-409e-8e91-4be685f21eb2" />
+<img width="2111" height="1172" alt="image" src="https://github.com/user-attachments/assets/9ac14de4-6a20-4685-8a3f-a6478a600f5c" />
+
 
 
 ## Resource View
