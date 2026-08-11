@@ -4,7 +4,8 @@
 
 
 ## Resource View
-<img width="2062" height="1242" alt="image" src="https://github.com/user-attachments/assets/abe2120e-5788-42b8-847b-cb871e940684" />
+<img width="1800" height="1194" alt="image" src="https://github.com/user-attachments/assets/b734dc81-3253-4f4b-99f0-ee42fa6d4b26" />
+
 
 
 
